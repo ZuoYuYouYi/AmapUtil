@@ -17,7 +17,7 @@ public class AmapConfig {
   /**
    * 根据高德经纬度获取地名Api
    */
-  public static final String GET_ADDRESS_URL = "http://restapi.amap.com/v3/geocode/regeo";
+  public static final String GET_ADDRESS_URL = "https://restapi.amap.com/v3/geocode/regeo";
   /**
    * 获取行政区域
    */

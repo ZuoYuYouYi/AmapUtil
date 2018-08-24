@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.zuoyu.config.AmapConfig;
+import org.zuoyu.entity.Address;
 import org.zuoyu.entity.Region;
 
 /**
@@ -97,5 +98,38 @@ public class AmapServerUtil {
     Region region = getRegion(regionName, 1);
     List<Region> regionList = region.getDistricts();
     return !regionList.isEmpty();
+  }
+
+  /**
+   * 根据经纬度查询地址信息
+   * @param location - 经纬度
+   * @return address - 地址信息封装对象
+   */
+  public static Address getAddress(String location) {
+    Map<String, String> maps = new HashMap<String, String>();
+    maps.put("location", location);
+    maps.put("output", AmapConfig.OUTPUT);
+    maps.put("key", AmapConfig.KEY);
+    String text = HttpClientUtils.doGet(AmapConfig.GET_ADDRESS_URL, maps);
+    JSONObject object = JSON.parseObject(text);
+    JSONObject jsonObject= (JSONObject) object.get("regeocode");
+    JSONObject addressComponent = (JSONObject) jsonObject.get("addressComponent");
+    Address address = addressComponent.toJavaObject(Address.class);
+    String[] locations = location.split(",");
+    address.setLongitude(locations[0]);
+    address.setLatitude(locations[1]);
+    return address;
+  }
+
+  /**
+   * 根据经纬度查询地址信息
+   * @param longitude - 经度
+   * @param latitude - 维度
+   * @return address - 地址信息封装对象
+   */
+  public static Address getAddress(String longitude, String latitude) {
+    StringBuilder location = new StringBuilder();
+    location.append(longitude).append(",").append(latitude);
+    return getAddress(location.toString());
   }
 }

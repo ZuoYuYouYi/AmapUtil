@@ -1,7 +1,15 @@
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
+import org.zuoyu.config.AmapConfig;
+import org.zuoyu.entity.Address;
 import org.zuoyu.entity.Region;
 import org.zuoyu.util.AmapServerUtil;
+import org.zuoyu.util.HttpClientUtils;
 
 /**
  * 测试.
@@ -58,17 +66,34 @@ public class HttpTest {
   }
 
   public void digui(String s1) {
-    List<String> stringList = AmapServerUtil.getNextLevelName(s1);
 
-    for (String s : stringList) {
-        if (AmapServerUtil.isNextLevel(s)){
-          ss.append(s);
-          digui(s);
+    List<String> stringList = AmapServerUtil.getNextLevelName(s1);
+    stringList.forEach(s -> {
+        if (!AmapServerUtil.isNextLevel(s)){
+          return;
         }
-        System.out.println(ss);
-        ss = null;
-        break;
-    }
+        digui(s);
+      System.out.println(s);
+    });
   }
 
+  /**
+   * 测试根据坐标获取地址
+   */
+  @Test
+  public void TestSix(){
+    Address address = AmapServerUtil.getAddress("113.664", "34.7505");
+    System.out.println(address);
+  }
+
+  @Test
+  public void TestSeven(){
+    Region region = AmapServerUtil.getRegion("二七区");
+    List<String> stringList = AmapServerUtil.getPolylineList(region);
+    stringList.forEach(s -> {
+      Address address = AmapServerUtil.getAddress(s);
+      System.out.println(address.toString());
+    });
+    System.out.println(stringList.size());
+  }
 }
