@@ -12,12 +12,14 @@ import org.zuoyu.util.AmapServerUtil;
  **/
 public class HttpTest {
 
+  private StringBuilder ss = new StringBuilder();
+
   /**
    * 测试下一级名字
    */
   @Test
   public void TestOne() {
-    List<String> stringList = AmapServerUtil.getNextLevelName("金水区");
+    List<String> stringList = AmapServerUtil.getNextLevelName("中国");
     stringList.forEach(s -> {
       System.out.println(s);
     });
@@ -33,6 +35,7 @@ public class HttpTest {
     stringList.forEach(s -> {
       System.out.println(s);
     });
+//    System.out.println(stringList.size());
   }
 
   /**
@@ -47,6 +50,25 @@ public class HttpTest {
     System.out.println(region.getDistricts());
 
 
+  }
+
+  @Test
+  public void TestFour() {
+    digui("河南");
+  }
+
+  public void digui(String s1) {
+    List<String> stringList = AmapServerUtil.getNextLevelName(s1);
+
+    for (String s : stringList) {
+        if (AmapServerUtil.isNextLevel(s)){
+          ss.append(s);
+          digui(s);
+        }
+        System.out.println(ss);
+        ss = null;
+        break;
+    }
   }
 
 }

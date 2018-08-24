@@ -71,7 +71,7 @@ public class AmapServerUtil {
   }
 
   /**
-   * 获取下一级区域的所有区域名字
+   * 获取下一级区域的所有区域名字.
    * @param regionName - 区域名字
    * @return nameList - 名字集合
    */
@@ -86,5 +86,16 @@ public class AmapServerUtil {
       nameList.add(reg.getName());
     });
     return nameList;
+  }
+
+  /**
+   * 是否还有下级.
+   * @param regionName - 区域名字
+   * @return boolean
+   */
+  public static boolean isNextLevel(String regionName) {
+    Region region = getRegion(regionName, 1);
+    List<Region> regionList = region.getDistricts();
+    return !regionList.isEmpty();
   }
 }
