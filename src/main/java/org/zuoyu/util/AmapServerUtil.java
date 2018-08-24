@@ -47,7 +47,7 @@ public class AmapServerUtil {
     Map<String, String> maps = new HashMap<String, String>();
     maps.put("keywords", regionName);
     maps.put("subdistrict", String.valueOf(level));
-    maps.put("key", "af84045d52d8529e64af6fa34b238686");
+    maps.put("key", AmapConfig.KEY);
     maps.put("extensions", "all");
     String text = HttpClientUtils.doGet(AmapConfig.GET_REGION_URL, maps);
     JSONObject object = JSON.parseObject(text);
