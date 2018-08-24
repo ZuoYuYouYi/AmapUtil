@@ -76,7 +76,7 @@ public class AmapServerUtil {
    * @return nameList - 名字集合
    */
   public static List<String> getNextLevelName(String regionName){
-    Region region = getRegion(regionName, 3);
+    Region region = getRegion(regionName, 1);
     List<Region> regionList = region.getDistricts();
     if (regionList.isEmpty()) {
       return null;

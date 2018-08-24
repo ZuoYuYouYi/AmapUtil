@@ -17,7 +17,7 @@ public class HttpTest {
    */
   @Test
   public void TestOne() {
-    List<String> stringList = AmapServerUtil.getNextLevelName("郑州");
+    List<String> stringList = AmapServerUtil.getNextLevelName("金水区");
     stringList.forEach(s -> {
       System.out.println(s);
     });
