@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSON;
+package org.zuoyu;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
