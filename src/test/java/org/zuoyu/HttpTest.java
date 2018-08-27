@@ -1,15 +1,9 @@
 package org.zuoyu;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.junit.Test;
-import org.zuoyu.config.AmapConfig;
 import org.zuoyu.entity.Address;
 import org.zuoyu.entity.Region;
 import org.zuoyu.util.AmapServerUtil;
-import org.zuoyu.util.HttpClientUtils;
 
 /**
  * 测试.
@@ -20,7 +14,6 @@ import org.zuoyu.util.HttpClientUtils;
  **/
 public class HttpTest {
 
-  private StringBuilder ss = new StringBuilder();
 
   /**
    * 测试下一级名字
