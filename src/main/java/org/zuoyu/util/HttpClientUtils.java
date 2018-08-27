@@ -50,6 +50,7 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * 访问网络
+ * @author Who?
  */
 public class HttpClientUtils {
 
