@@ -48,6 +48,9 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 
+/**
+ * 访问网络
+ */
 public class HttpClientUtils {
 
   /**

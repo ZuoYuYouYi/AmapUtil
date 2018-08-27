@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "amap-demo",
+                "projectName": "amap-demo",
+                "workingDirectory": "/home/zuoyu/Document/MyProject/amapdemo",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "amap-demo",
+                "projectName": "amap-demo",
+                "workingDirectory": "/home/zuoyu/Document/MyProject/amapdemo",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
