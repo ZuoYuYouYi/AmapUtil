@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.zuoyu.exception.MyException;
 import org.zuoyu.config.AmapConfig;
 import org.zuoyu.entity.Address;
 import org.zuoyu.entity.Region;
@@ -131,5 +133,62 @@ public class AmapServerUtil {
     StringBuilder location = new StringBuilder();
     location.append(longitude).append(",").append(latitude);
     return getAddress(location.toString());
+  }
+
+  /**
+   * 根据经纬度集合批量查询地址信息
+   * @param locationList - 经纬度集合，最多20条
+   * @return List<Address> - 地址信息集合
+   */
+  public static List<Address> getAddressList(List<String> locationList) {
+    Map<String, String> maps = new HashMap<String, String>();
+    if (locationList.size() > 20) {
+      throw new MyException("经纬度个数不得超过20条！");
+    }
+    String locations = locationsFormat(locationList);
+    maps.put("location", locations);
+    maps.put("output", AmapConfig.OUTPUT);
+    maps.put("key", AmapConfig.KEY);
+    maps.put("batch", "true");
+    String text = HttpClientUtils.doGet(AmapConfig.GET_ADDRESS_URL, maps);
+    JSONObject object = JSON.parseObject(text);
+    JSONArray jsonArray = (JSONArray) object.get("regeocodes");
+    List<Address> addressList = new ArrayList<Address>();
+//    jdk8新特性，原子操作类，线程安全
+    AtomicInteger atomicInteger = new AtomicInteger();
+    jsonArray.forEach(json -> {
+      String jsonString = JSON.toJSONString(json);
+      JSONObject jsonObject = JSON.parseObject(jsonString);
+      JSONObject addressComponent = (JSONObject) jsonObject.get("addressComponent");
+      Address address = addressComponent.toJavaObject(Address.class);
+      String location = locationList.get(atomicInteger.get());
+      String[] splits = location.split(",");
+      address.setLongitude(splits[0]);
+      address.setLatitude(splits[1]);
+      addressList.add(address);
+      atomicInteger.getAndIncrement();
+    });
+    return addressList;
+  }
+
+  /**
+   * 将经纬度集合转化为可查询的字符串
+   * @param locationList - 经纬度集合
+   * @return locations - 可查询的格式
+   */
+  private static String locationsFormat(List<String> locationList) {
+    StringBuilder locations = new StringBuilder();
+    String s = "|";
+    locationList.forEach(location -> {
+      if (location.contains(s)){
+        int x = location.indexOf(s);
+        location = location.substring(0, x);
+      }
+      if (locations.length() > 0) {
+        locations.append(s);
+      }
+      locations.append(location);
+    });
+    return locations.toString();
   }
 }
