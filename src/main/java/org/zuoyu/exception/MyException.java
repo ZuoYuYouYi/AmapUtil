@@ -2,7 +2,7 @@ package org.zuoyu.exception;
 
 /**
  * 自定义异常类.
- *
+ * 创建异常
  * @author zuoyu
  * @program amapdemo
  * @create 2018-08-25 17:08
