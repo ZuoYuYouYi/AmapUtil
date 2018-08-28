@@ -2,7 +2,7 @@ package org.zuoyu.config;
 
 /**
  * @author zuoyu
- * @deprecated 高德地图配置
+ *  高德地图配置
  */
 public class AmapConfig {
 
